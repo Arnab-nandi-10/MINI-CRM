@@ -56,9 +56,11 @@ const Profile = () => {
         email: formData.email,
         phone: formData.phone,
       };
-      const res = await axios.put("http://localhost:5000/api/auth/update-profile", updateData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.put(
+        "http://localhost:5000/api/auth/update-profile",
+        updateData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setUser(res.data);
       setMessage("Profile updated successfully!");
       setEditing(false);
@@ -110,53 +112,60 @@ const Profile = () => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">My Profile</h1>
-        <p className="text-gray-600">Manage your account settings and preferences</p>
+      {/* HEADER */}
+      <div className="max-w-7xl mx-auto mb-8">
+        <h1 className="text-3xl font-bold text-gray-900">Account Settings</h1>
+        <p className="text-gray-600 mt-1">
+          Manage your personal information and security
+        </p>
       </div>
 
-      {/* Messages */}
+      {/* MESSAGES */}
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded mb-6 text-red-700 font-medium">
+        <div className="max-w-7xl mx-auto bg-red-50 border-l-4 border-red-500 p-4 rounded mb-6 text-red-700 font-medium">
           {error}
         </div>
       )}
       {message && (
-        <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded mb-6 text-green-700 font-medium">
+        <div className="max-w-7xl mx-auto bg-green-50 border-l-4 border-green-500 p-4 rounded mb-6 text-green-700 font-medium">
           {message}
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Profile Card */}
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="text-center">
-              <div className="inline-block bg-gradient-to-br from-blue-600 to-purple-600 rounded-full p-6 mb-4">
-                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-1">{user?.name}</h2>
-              <p className="text-gray-600 text-sm mb-4">{user?.email}</p>
-              <span className="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
-                {user?.role}
-              </span>
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* LEFT — PROFILE SUMMARY CARD */}
+        <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center rounded-full text-3xl font-bold">
+              {user?.name?.charAt(0) || "A"}
             </div>
+          </div>
+
+          <h2 className="text-xl font-bold text-gray-900">{user?.name}</h2>
+          <p className="text-gray-500 text-sm mb-3">{user?.email}</p>
+
+          <span className="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+            {user?.role || "User"}
+          </span>
+
+          <div className="mt-6 border-t pt-4 text-left text-sm text-gray-600">
+            <p><strong>Account ID:</strong> #{user?._id?.slice(0, 8)}</p>
+            <p className="mt-1"><strong>Status:</strong> Active</p>
           </div>
         </div>
 
-        {/* Profile Settings */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Personal Information */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-800">Personal Information</h3>
+        {/* RIGHT — SETTINGS */}
+        <div className="xl:col-span-2 space-y-6">
+          {/* PERSONAL INFORMATION CARD */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-gray-900">
+                Personal Information
+              </h3>
               {!editing && (
                 <button
                   onClick={() => setEditing(true)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
                 >
                   Edit
                 </button>
@@ -164,9 +173,11 @@ const Profile = () => {
             </div>
 
             {editing ? (
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Full Name
+                  </label>
                   <input
                     type="text"
                     name="name"
@@ -175,8 +186,11 @@ const Profile = () => {
                     className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
                   <input
                     type="email"
                     name="email"
@@ -185,8 +199,11 @@ const Profile = () => {
                     className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone
+                  </label>
                   <input
                     type="tel"
                     name="phone"
@@ -196,7 +213,8 @@ const Profile = () => {
                     className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
                   />
                 </div>
-                <div className="flex gap-4 pt-4">
+
+                <div className="md:col-span-2 flex gap-4 pt-4">
                   <button
                     onClick={handleSaveProfile}
                     className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold"
@@ -212,29 +230,42 @@ const Profile = () => {
                 </div>
               </div>
             ) : (
-              <div className="space-y-4">
-                <div className="border-b pb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
                   <p className="text-gray-600 text-sm">Full Name</p>
-                  <p className="text-gray-800 font-semibold text-lg">{user?.name}</p>
+                  <p className="text-gray-900 font-semibold text-lg">
+                    {user?.name}
+                  </p>
                 </div>
-                <div className="border-b pb-4">
+
+                <div>
                   <p className="text-gray-600 text-sm">Email Address</p>
-                  <p className="text-gray-800 font-semibold text-lg">{user?.email}</p>
+                  <p className="text-gray-900 font-semibold text-lg">
+                    {user?.email}
+                  </p>
                 </div>
+
                 <div>
                   <p className="text-gray-600 text-sm">Phone Number</p>
-                  <p className="text-gray-800 font-semibold text-lg">{user?.phone || "Not provided"}</p>
+                  <p className="text-gray-900 font-semibold text-lg">
+                    {user?.phone || "Not provided"}
+                  </p>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Change Password */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Change Password</h3>
+          {/* SECURITY / CHANGE PASSWORD CARD */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              Security
+            </h3>
+
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Current Password
+                </label>
                 <input
                   type="password"
                   name="currentPassword"
@@ -244,8 +275,11 @@ const Profile = () => {
                   className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  New Password
+                </label>
                 <input
                   type="password"
                   name="newPassword"
@@ -255,8 +289,11 @@ const Profile = () => {
                   className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password
+                </label>
                 <input
                   type="password"
                   name="confirmPassword"
@@ -266,6 +303,7 @@ const Profile = () => {
                   className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
                 />
               </div>
+
               <button
                 onClick={handleChangePassword}
                 className="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition font-semibold"
