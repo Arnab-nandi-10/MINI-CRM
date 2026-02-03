@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 const AuthPage = () => {
   const [panelOpen, setPanelOpen] = useState(false);
@@ -17,7 +18,7 @@ const AuthPage = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(API_ENDPOINTS.LOGIN, {
         email,
         password,
       });
@@ -37,7 +38,7 @@ const AuthPage = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post(API_ENDPOINTS.REGISTER, {
         name,
         email,
         password,
