@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function TaskCalendar() {
   const [tasks, setTasks] = useState([]);
@@ -9,7 +10,7 @@ export default function TaskCalendar() {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/tasks", {
+        const res = await axios.get(API_ENDPOINTS.TASKS, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTasks(res.data);

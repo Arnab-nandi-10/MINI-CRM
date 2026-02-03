@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function LeadModal({ open, onClose, onSave, lead }) {
   const [form, setForm] = useState({ name: "", email: "", status: "Active", client: "" });
@@ -16,7 +17,7 @@ export default function LeadModal({ open, onClose, onSave, lead }) {
       setLoadingClients(true);
       const token = localStorage.getItem("token");
       axios
-        .get("http://localhost:5000/api/clients", {
+        .get(API_ENDPOINTS.CLIENTS, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setClients(res.data))

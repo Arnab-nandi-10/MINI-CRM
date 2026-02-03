@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LeadModal from "../components/LeadModal";
+import { API_ENDPOINTS } from "../config/api";
 
 const Leads = () => {
   const [leads, setLeads] = useState([]);
@@ -15,7 +16,7 @@ const Leads = () => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/leads", {
+      const res = await axios.get(API_ENDPOINTS.LEADS, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLeads(res.data);
@@ -44,7 +45,7 @@ const Leads = () => {
     if (!window.confirm("Delete this lead?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/leads/${id}`, {
+      await axios.delete(API_ENDPOINTS.LEAD(id), {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchLeads();
@@ -57,11 +58,11 @@ const Leads = () => {
     try {
       const token = localStorage.getItem("token");
       if (selectedLead) {
-        await axios.put(`http://localhost:5000/api/leads/${selectedLead._id}`, data, {
+        await axios.put(API_ENDPOINTS.LEAD(selectedLead._id), data, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post("http://localhost:5000/api/leads", data, {
+        await axios.post(API_ENDPOINTS.LEADS, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }

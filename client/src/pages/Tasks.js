@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TaskModal from "../components/TaskModal";
 import TaskCalendar from "../components/TaskCalendar";
+import { API_ENDPOINTS } from "../config/api";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -16,7 +17,7 @@ const Tasks = () => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/tasks", {
+      const res = await axios.get(API_ENDPOINTS.TASKS, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(res.data);
@@ -45,7 +46,7 @@ const Tasks = () => {
     if (!window.confirm("Delete this task?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/tasks/${id}`, {
+      await axios.delete(API_ENDPOINTS.TASK(id), {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTasks();
@@ -59,12 +60,12 @@ const Tasks = () => {
       const token = localStorage.getItem("token");
       if (selectedTask) {
         await axios.put(
-          `http://localhost:5000/api/tasks/${selectedTask._id}`,
+          API_ENDPOINTS.TASK(selectedTask._id),
           data,
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
-        await axios.post("http://localhost:5000/api/tasks", data, {
+        await axios.post(API_ENDPOINTS.TASKS, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }

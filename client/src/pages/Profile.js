@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -20,7 +21,7 @@ const Profile = () => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/auth/me", {
+        const res = await axios.get(API_ENDPOINTS.GET_ME, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
@@ -57,7 +58,7 @@ const Profile = () => {
         phone: formData.phone,
       };
       const res = await axios.put(
-        "http://localhost:5000/api/auth/update-profile",
+        API_ENDPOINTS.UPDATE_PROFILE,
         updateData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -83,7 +84,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/auth/change-password",
+        API_ENDPOINTS.CHANGE_PASSWORD,
         {
           currentPassword: formData.currentPassword,
           newPassword: formData.newPassword,

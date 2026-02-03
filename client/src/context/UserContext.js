@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 const UserContext = createContext();
 
@@ -16,7 +17,7 @@ export function UserProvider({ children }) {
         return;
       }
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/me", {
+        const res = await axios.get(API_ENDPOINTS.GET_ME, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ClientModal from "../components/ClientModal";
+import { API_ENDPOINTS } from "../config/api";
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
@@ -15,7 +16,7 @@ const Clients = () => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/clients", {
+      const res = await axios.get(API_ENDPOINTS.CLIENTS, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClients(res.data);
@@ -45,7 +46,7 @@ const Clients = () => {
     if (!window.confirm("Delete this client?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/clients/${id}`, {
+      await axios.delete(API_ENDPOINTS.CLIENT(id), {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchClients();
@@ -58,11 +59,11 @@ const Clients = () => {
     try {
       const token = localStorage.getItem("token");
       if (selectedClient) {
-        await axios.put(`http://localhost:5000/api/clients/${selectedClient._id}`, data, {
+        await axios.put(API_ENDPOINTS.CLIENT(selectedClient._id), data, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post("http://localhost:5000/api/clients", data, {
+        await axios.post(API_ENDPOINTS.CLIENTS, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
