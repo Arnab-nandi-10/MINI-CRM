@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardCharts from "../components/DashboardCharts";
+import { API_ENDPOINTS } from "../config/api";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -24,12 +25,9 @@ const Dashboard = () => {
       try {
         const token = localStorage.getItem("token");
 
-        const res = await axios.get(
-          "http://localhost:5000/api/dashboard/stats",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const res = await axios.get(API_ENDPOINTS.DASHBOARD_STATS, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         setStats({
           clients: res.data.totalClients || 0,
