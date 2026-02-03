@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy Bypass -File scripts\\dev.ps1"
+  },
   "dependencies": {
     "mongodb": "^7.0.0"
   }

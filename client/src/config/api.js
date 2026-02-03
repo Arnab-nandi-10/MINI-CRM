@@ -1,5 +1,5 @@
 // API configuration
-const API_URL = 'https://mini-crm-backend-tf6f.onrender.com';
+const API_URL = process.env.REACT_APP_API_URL || 'https://mini-crm-backend-tf6f.onrender.com';
 
 export const API_ENDPOINTS = {
   // Auth endpoints
